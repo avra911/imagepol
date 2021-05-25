@@ -1,0 +1,62 @@
+fr:
+  theme:
+    color: teal
+  i18n:
+    language:
+      code: fr_FR
+      name: Français
+  message:
+    welcome: 'Bienvenue, <strong>%{user_name}</strong>!'
+    welcome_guest: Partager des images en toute simplicité!
+    logged_in_as: 'Connecté en tant que, <strong>%{name}</strong>'
+  actions:
+    show: montrer
+    edit: éditer
+    delete: effacer
+    are_you_sure: Êtes-vous sûr?
+  devise:
+    failure:
+      deleted_account: Vous avez supprimé votre compte. Merci!
+    passwords:
+      new:
+        send_me_reset_password_instructions: Réinitialiser le mot de passe
+  domains:
+    title: Domaines
+    new: Nouveau domaine
+    add: Ajouter un nouveau domaine
+    my: ''
+    albums:
+      title: ''
+    columns:
+      name: ''
+    messages:
+      intro: ''
+      dns_explain: ''
+  albums:
+    title: ''
+    edit:
+      title: ''
+      tabs:
+        general:
+          title: ''
+        gallery:
+          title: ''
+          images:
+            one: ''
+            other: ''
+    new: ''
+    my: ''
+    login_to_vote: ''
+    vote: ''
+    voted: ''
+    columns:
+      name: ''
+      domain: ''
+      suffix: ''
+  photos:
+    dropzone:
+      upload:
+        message: ''
+    votes:
+      one: ''
+      other: ''

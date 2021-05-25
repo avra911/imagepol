@@ -1,0 +1,81 @@
+<header>
+  <div class="navbar-fixed">
+    <nav class="white" role="navigation">
+      <div class="nav-wrapper container">
+        <%= link_to root_path, html_options = {class: "brand-logo", id: "logo-container"} do %>
+          <span class="left">
+            <img src="<%= asset_path('logo.svg') %>">
+          </span>
+          <b class="<%= @color %>-text">image</b><b>pol</b> <sup style="font-size: 0.5em;" class="red-text">beta</sup>
+        <% end %>
+        <ul class="right hide-on-med-and-down">
+          <% unless user_signed_in? %>
+            <li><%= link_to(t('devise.sessions.new.sign_in'), new_user_session_path)  %></li>
+            <li><%= link_to(t('devise.registrations.new.sign_up'), new_user_registration_path)  %></li>
+          <% else %>
+            <li><%= link_to t('domains.title'), domains_path %></li>
+            <li><%= link_to t('albums.title'), albums_path %></li>
+          <% end %>
+
+          <!-- Dropdown Trigger -->
+          <% if user_signed_in? %>
+            <li>
+              <a class="dropdown-trigger" data-alignment="left" href="#!" data-target="dropdown1">
+                <%= raw(t("message.logged_in_as", name: current_user.email)) %>
+                <i class="material-icons right">menu</i>
+              </a>
+            </li>
+          <% end %>
+        </ul>
+        <a id="sidenav" href="#" data-turbolinks="false" data-target="slide-out" class="button-collapse sidenav-trigger"><i class="material-icons">menu</i></a>
+      </div>
+    </nav>
+  </div>
+
+  <%= render "menu_dropdown", id: 'dropdown1' %>
+
+  <ul id="slide-out" class="sidenav">
+
+    <li>
+      <div class="user-view">
+        <div class="background <%= @color %>"></div>
+          <% if user_signed_in? %>
+            <% if current_user.image.blank? %>
+              <i class="material-icons white-text medium">account_circle</i>
+            <% else %>
+              <img class="circle" src="<%= current_user.image %>">
+            <% end %>
+            <span class="white-text name"><%= current_user.name %></span>
+            <span class="white-text email"><%= current_user.email %></span>
+          <% else %>
+            <i class="material-icons white-text medium">account_circle</i>
+            <span class="white-text name">Welcome,</span>
+            <span class="white-text email">guest!</span>
+          <% end %>
+      </div>
+    </li>
+
+    <% unless user_signed_in? %>
+      <li><%= link_to(t('devise.sessions.new.sign_in'), new_user_session_path)  %></li>
+      <li><%= link_to(t('devise.registrations.new.sign_up'), new_user_registration_path)  %></li>
+    <% else %>
+      <li><%= link_to t('domains.title'), domains_path %></li>
+      <li><%= link_to t('albums.title'), albums_path %></li>
+    <% end %>
+
+    <% if user_signed_in? %>
+      <li class="divider"></li>
+      <li><%= link_to t('domains.new'), new_manage_domain_path %></li>
+      <li><%= link_to t('domains.my'), manage_domains_path %></li>
+
+      <li class="divider"></li>
+      <li><%= link_to t('albums.new'), new_manage_album_path %></li>
+      <li><%= link_to t('albums.my'), manage_albums_path %></li>
+
+      <li class="divider"></li>
+      <li><%= link_to t('devise.registrations.edit.title', resource: User.model_name.human), edit_user_registration_path, :class => 'navbar-link' %></li>
+      <li><%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %></li>
+    <% end %>
+  </ul>
+
+</header>

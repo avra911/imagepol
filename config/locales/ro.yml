@@ -1,0 +1,66 @@
+ro:
+  theme:
+    color: teal
+  i18n:
+    language:
+      code: ro_RO
+      name: Română
+  message:
+    welcome: 'Bine ai revenit, <strong>%{user_name}</strong>!'
+    welcome_guest: Partajarea Imaginilor Foarte Simplu!
+    logged_in_as: 'Conectat ca, <strong>%{name} </strong>'
+  actions:
+    show: detalii
+    edit: editare
+    delete: ștergere
+    are_you_sure: Ești sigur?
+  devise:
+    failure:
+      deleted_account: Contul dvs. a fost șters. Vă mulțumim!
+    passwords:
+      new:
+        send_me_reset_password_instructions: Reseteaza parola
+  domains:
+    title: Domenii
+    new: Domeniu Nou
+    add: Adaugă Un Domeniu Nou
+    my: Domeniile mele
+    albums:
+      title: 'Albume pentru %{name}'
+    columns:
+      name: Denumire
+    messages:
+      intro: >-
+        Puteți adăuga un domeniu pentru a-l utiliza ca prefix unic pentru albume.
+      dns_explain: >-
+        Includeți o înregistrare TXT în DNS cu numele "%{name}" și valoarea
+        "%{value}".<br />Ar putea dura ceva mai mult pentru ca DNS-ul să se
+        propageze.
+  albums:
+    title: Albume
+    edit:
+      title: Editare Album
+      tabs:
+        general:
+          title: Informații Generale
+        gallery:
+          title: Galerie Imagini
+          images:
+            one: '%{count} imagine'
+            other: '%{count} imagini'
+    new: Album Nou
+    my: Albumele Mele
+    login_to_vote: (conectați-vă pentru a vota)
+    vote: Votează
+    voted: Votat
+    columns:
+      name: Denumire
+      domain: Domeniu
+      suffix: Sufix
+  photos:
+    dropzone:
+      upload:
+        message: Trageți de imagini aici pentru a încărca (sau faceți clic)
+    votes:
+      one: '%{count} vot'
+      other: '%{count} voturi'

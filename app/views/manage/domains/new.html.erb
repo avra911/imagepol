@@ -1,0 +1,5 @@
+<h1><%= t('domains.new') %></h1>
+
+<p><%= raw(t('domains.messages.dns_explain', name: Domain::DNS_PREFIX, value: current_user.id)) %></p>
+
+<%= render 'form', domain: @domain, url: manage_domains_path %>

@@ -1,0 +1,20 @@
+<%= link_to domain_album_path(
+    domain_name: (album.domain_id.nil? ? album.id : @domain.name),
+    id: album.slug,
+    suffix: album.suffix.parameterize
+  ), style: "margin-left: 5px", class: "btn-floating right btn-small waves-effect waves-light orange" do %>
+  <i class="material-icons">play_arrow</i>
+<% end %>
+
+<% if user_signed_in? and current_user.id == album.user_id %>
+  <%= link_to edit_manage_album_path(album), style: "margin-left: 5px", 
+    class: "btn-floating right btn-small waves-effect waves-light #{@color}" do %>
+    <i class="material-icons">edit</i>
+  <% end %>
+  <%= link_to manage_album_path(album), 
+    method: :delete,
+    data: { confirm: 'Are you sure?' },
+    class: "btn-floating right btn-small waves-effect waves-light red" do %>
+    <i class="material-icons">delete</i>
+  <% end %>
+<% end %>

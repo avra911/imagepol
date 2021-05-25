@@ -1,0 +1,15 @@
+<!-- Dropdown Structure -->
+<ul id="<%= id %>" class="dropdown-content">
+  <% if user_signed_in? %>
+    <li><%= link_to t('domains.new'), new_manage_domain_path %></li>
+    <li><%= link_to t('domains.my'), manage_domains_path %></li>
+
+    <li class="divider"></li>
+    <li><%= link_to t('albums.new'), new_manage_album_path %></li>
+    <li><%= link_to t('albums.my'), manage_albums_path %></li>
+
+    <li class="divider"></li>
+    <li><%= link_to t('devise.registrations.edit.title', resource: User.model_name.human), edit_user_registration_path, :class => 'navbar-link' %></li>
+    <li><%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %></li>
+  <% end %>
+</ul>

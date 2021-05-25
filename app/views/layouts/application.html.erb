@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Imagepol</title>
+    <%= csrf_meta_tags %>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="<%= asset_path('favicon/apple-icon-57x57.png') %>">
+    <link rel="apple-touch-icon" sizes="60x60" href="<%= asset_path('favicon/apple-icon-60x60.png') %>">
+    <link rel="apple-touch-icon" sizes="72x72" href="<%= asset_path('favicon/apple-icon-72x72.png') %>">
+    <link rel="apple-touch-icon" sizes="76x76" href="<%= asset_path('favicon/apple-icon-76x76.png') %>">
+    <link rel="apple-touch-icon" sizes="114x114" href="<%= asset_path('favicon/apple-icon-114x114.png') %>">
+    <link rel="apple-touch-icon" sizes="120x120" href="<%= asset_path('favicon/apple-icon-120x120.png') %>">
+    <link rel="apple-touch-icon" sizes="144x144" href="<%= asset_path('favicon/apple-icon-144x144.png') %>">
+    <link rel="apple-touch-icon" sizes="152x152" href="<%= asset_path('favicon/apple-icon-152x152.png') %>">
+    <link rel="apple-touch-icon" sizes="180x180" href="<%= asset_path('favicon/apple-icon-180x180.png') %>">
+    <link rel="icon" type="image/png" sizes="192x192"  href="<%= asset_path('favicon/android-icon-192x192.png') %>">
+    <link rel="icon" type="image/png" sizes="32x32" href="<%= asset_path('favicon/favicon-32x32.png') %>">
+    <link rel="icon" type="image/png" sizes="96x96" href="<%= asset_path('favicon/favicon-96x96.png') %>">
+    <link rel="icon" type="image/png" sizes="16x16" href="<%= asset_path('favicon/favicon-16x16.png') %>">
+    <link rel="manifest" href="<%= asset_path('favicon/manifest.json') %>">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="<%= asset_path('favicon/ms-icon-144x144.png') %>">
+    <meta name="theme-color" content="#ffffff">
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'https://fonts.googleapis.com/icon?family=Material+Icons', media: 'all' %>
+</head>
+<body>
+<%= render 'menu' %>
+
+<main>
+    <% flash.each do |type, message| %>
+        <script id="toast">
+            jQuery(function() {
+                M.toast({html: '<%= message %>', classes: 'rounded'});
+            });
+        </script>
+    <% end %>
+
+    <% if controller.action_name == 'home' and controller.controller_name == 'albums' %>
+        <%= yield %>
+    <% else %>
+        <div class="container">
+            <div class="section">
+                <%= yield %>
+            </div>
+        </div>
+    <% end %>
+</main>
+
+<footer class="page-footer <%= @color %>">
+    <div class="container">
+        <div class="row">
+            <div class="col l6 s12">
+                <h5 class="white-text">Project Info</h5>
+                <p class="grey-text text-lighten-4">We are working on this project like it's our full time job. Any amount would help support and continue development on this project and is greatly appreciated.</p>
+                
+                <form action="https://www.paypal.com/donate" method="post" target="_top">
+                    <input type="hidden" name="hosted_button_id" value="WP25A3JHZFHA2" />
+                    <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+                    <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+                </form>
+            </div>
+            <div class="col l3 s12">
+                <h5 class="white-text">Useful links</h5>
+                <ul>
+                    <li><a class="white-text" href="https://www.paypal.com/donate?hosted_button_id=WP25A3JHZFHA2">Donate</a></li>
+                    <li><a class="white-text" href="#!">About us</a></li>
+                    <li><a class="white-text" href="#!">Contact</a></li>
+                    <li><a class="white-text" href="#!">Privacy Policy</a></li>
+                    <li><a class="white-text" href="#!">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="col l3 s12">
+                <h5 class="white-text">Connect</h5>
+                <ul>
+                    <li><a class="white-text" href="https://github.com/avra911/imagepol">Github</a></li>
+                    <li><a class="white-text" href="#!">Google</a></li>
+                    <li><a class="white-text" href="#!">Facebook</a></li>
+                    <li><a class="white-text" href="#!">Instagram</a></li>
+                    <li><a class="white-text" href="#!">Linkedin</a></li>
+                    <li><a class="white-text" href="#!">Twiter</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer-copyright">
+        <div class="container">
+            &copy; <%= Date.today.year %> Imagepol. Made with ♥ in EU.
+            <% unless user_signed_in? %><%= render 'language_switcher' %><% end %>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

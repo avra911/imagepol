@@ -1,0 +1,63 @@
+en:
+  theme:
+    color: teal
+  i18n:
+    language:
+      code: 'en_GB'
+      name: 'English'
+  message:
+    welcome: "Welcome back, <strong>%{user_name}</strong>!"
+    welcome_guest: "Sharing Images Made Easy!"
+    logged_in_as: "Logged in as, <strong>%{name}</strong>"
+    welcome_slide: "A modern responsive public/private photo sharing system for individual or companies"
+  actions:
+    show: "show"
+    edit: "edit"
+    delete: "delete"
+    are_you_sure: 'Are you sure?'
+  devise:
+      failure:
+        deleted_account: "You've deleted your account. Thanks!"
+      passwords:
+        new:
+          send_me_reset_password_instructions: "Reset password"
+  domains:
+    title: "Domains"
+    new: "New Domain"
+    add: "Add A New Domain"
+    my: "My Domains"
+    albums:
+      title: "Albums for %{name}"
+    columns:
+      name: "Name"
+    messages:
+      intro: 'You Can Add A New Domain To Use It As Unique Prefix For The Albums'
+      dns_explain: "Please include a TXT record in your DNS with the name \"%{name}\" and value \"%{value}\".<br />It could take a bit longer for DNS to propagate."
+  albums:
+    title: "Albums"
+    edit:
+      title: "Editing Album"
+      tabs:
+        general:
+          title: "General Info"
+        gallery:
+          title: "Gallery"
+          images:
+            one: "%{count} image"
+            other: "%{count} images"
+    new: "New Album"
+    my: "My Albums"
+    login_to_vote: "(login to vote)"
+    vote: "Vote"
+    voted: "Voted"
+    columns:
+      name: "Name"
+      domain: "Domain"
+      suffix: "Suffix"
+  photos:
+    dropzone:
+      upload:
+        message: 'Drop images to upload (or click)'
+    votes:
+      one: "%{count} vote"
+      other: "%{count} votes"

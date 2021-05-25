@@ -1,0 +1,81 @@
+<div class="row cards" id="all-photos">
+  <% @photos = @album.photos.page(params[:page]).per(ApplicationHelper::PHOTOS_PER_PAGE) %>
+  <% @photos.each_with_index do |photo, index| %>
+    <%= render 'photo_card', photo: photo, index: index %>
+  <% end %>
+</div>
+<%= paginate @photos %>
+
+<%= form_with(model: photo, url: manage_photos_path, format: :json, local: true, html: { multipart: true, class: "dropzone"}) do |form| %>
+  <%= form.hidden_field :album_id, value: @album.id %>
+  <div class="fallback">
+    <%= form.file_field :upload %>
+
+    <div id="tpl-drop-images">
+      <div style="justify-content: space-around; margin: 20px 0">
+        <a class="btn btn-floating btn-large pulse">
+          <i class="material-icons">cloud_upload</i></a></div>
+      <div style="justify-content: space-around; margin: 20px auto"><h4><%= t('photos.dropzone.upload.message') %></h4></div>
+    </div>
+  </div>
+<% end %>
+
+<div id="tpl-template-preview" style="display: none" data-turbolinks="false">
+  <%= render 'photo_card_upload_tpl' %>
+</div>
+
+<script type="application/javascript">
+    Dropzone.autoDiscover = false;
+
+    function moveElement(template) {
+        var card_action = template.find('.card-action');
+        template.find(".dz-remove").detach().appendTo(card_action);
+    }
+
+    function reloadCardItems() {
+        $cards = $('.cards');
+        $cards.imagesLoaded(function() {
+            $cards.masonry('reloadItems');
+            $cards.masonry();
+        });
+    }
+
+    jQuery(".dropzone").dropzone({
+        maxFilesize: 2,
+        maxFiles: 20,
+        thumbnailWidth: 389,
+        thumbnailHeight: 263,
+        paramName: "photo[upload]",
+        addRemoveLinks: true,
+
+        previewsContainer: '#all-photos',
+        previewTemplate: jQuery('#tpl-template-preview').html(),
+        dictDefaultMessage: jQuery('#tpl-drop-images').html(),
+
+        success: function(file, response){
+            $(file.previewTemplate).find('.dz-remove').attr('id', response.fileID);
+            $(file.previewElement).addClass("dz-success");
+            this.emit('thumbnail', file, response.imageUrl);
+            reloadCardItems();
+            moveElement($(file.previewTemplate));
+        },
+        init: function() {
+            this.on("addedfile", function(file) {
+                reloadCardItems();
+                moveElement($(file.previewTemplate));
+            });
+        },
+        removedfile: function(file){
+            var id = $(file.previewTemplate).find('.dz-remove').attr('id');
+
+            $.ajax({
+                type: 'DELETE',
+                url: '/manage/photos/' + id + '.json',
+                success: function(data){
+                    reloadCardItems();
+                    $(file.previewTemplate).remove();
+                }
+            });
+        }
+    });
+</script>

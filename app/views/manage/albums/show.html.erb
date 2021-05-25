@@ -1,0 +1,24 @@
+<div class="row page-title">
+  <div class="col s8 m10">
+    <h4><%= !@album.domain_id.nil? ? @domain.name : "" %> / <%= @album.name %> / <%= @album.suffix %></h4>
+  </div>
+
+  <% if user_signed_in? and current_user.id == @album.user.id %>
+    <div class="col s2 m1 right">
+      <%= link_to edit_manage_album_path(@album), class: "btn-floating right btn-large waves-effect waves-light red" do %>
+        <i class="material-icons">mode_edit</i>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<div class="row cards">
+  <% @photos = @album.photos.page(params[:page]).per(ApplicationHelper::PHOTOS_PER_PAGE) %>
+  <% @photos.each_with_index do |photo, index| %>
+    <%= render 'photo_card', photo: photo, index: index %>
+  <% end %>
+</div>
+<%= paginate @photos %>
+
+<%= render "manage/albums/facebook_comments" %>
+<%= render "manage/albums/facebook_comments_script" %>

@@ -1,0 +1,20 @@
+<div id="tx-live-lang-container" class="txlive-langselector txlive-langselector-bottomright">
+  <ul id="tx-live-lang-picker" class="txlive-langselector-list notranslate">
+    <% I18n.available_locales.each do |locale| %>
+      <li onclick="location.href='http://<%= locale != :en ? "#{locale}." : "" %><%= Rails.application.config.base_url %>';">
+        <%= I18n.t("i18n.language.name", locale: locale) %>
+      </li>
+    <% end %>
+  </ul>
+  <div class="txlive-langselector-toggle notranslate" id="tx-live-lang-toggle">
+      <span class="txlive-langselector-current" id="tx-live-lang-current">
+        <%= I18n.t("i18n.language.name", locale: I18n.locale) %>
+      </span>
+    <span class="txlive-langselector-marker"></span>
+  </div>
+</div>
+<script type="application/javascript">
+    jQuery( "#tx-live-lang-container" ).click(function() {
+        jQuery( "#tx-live-lang-picker" ).toggle( "slow");
+    });
+</script>

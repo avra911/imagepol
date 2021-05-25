@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Imagepol</title>
+  <%= csrf_meta_tags %>
+
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <%= stylesheet_link_tag 'https://fonts.googleapis.com/icon?family=Material+Icons', media: 'all' %>
+</head>
+<body class="<%= @color %>">
+  <main>
+    <div class="row" style="padding-top: 4rem">
+      <div class="col s10 offset-s1 m8 offset-m2 l6 offset-l3" style="min-width: 300px;">
+        <div class="card-panel">
+          <%= link_to root_path, html_options = {class: "btn-floating right btn-large waves-effect waves-light #{@color}"} do %>
+              <i class="material-icons">home</i>
+          <% end %>
+          <main>
+            <div class="container">
+              <div class="section">
+                <% flash.each do |type, message| %>
+                    <script id="toast">
+                      jQuery(function() {
+                          M.toast({html: '<%= message %>', classes: 'rounded'});
+                      });
+                    </script>
+                <% end %>
+                <%= yield %>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

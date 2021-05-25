@@ -1,0 +1,44 @@
+<div class="row page-title">
+  <div class="col s6 m6">
+    <h4><%= t('albums.title') %></h4>
+  </div>
+  <div class="col s6 m6">
+    <%= link_to new_manage_album_path, class: "btn-floating right btn-large waves-effect waves-light #{@color}" do %>
+      <i class="material-icons">add</i>
+    <% end %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col s12 m3">
+    <%= undraw("like_dislike", color: "#{@color}", size: "100%") %>
+  </div>
+  <div class="col s12 m9">
+    <table class="highlight">
+      <thead>
+        <tr>
+          <th width="20">#</th>
+          <th><%= t('albums.columns.name') %></th>
+          <th class="hide-on-small-only"><%= t('albums.columns.suffix') %></th>
+          <th></th>
+          <th width="20"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @albums.each do |album| %>
+          <tr>
+            <td></td>
+            <td><%= album.name %></td>
+            <td class="hide-on-small-only"><%= album.suffix %></td>
+            <td class="right" style="width: 120px">
+              <%= render '/manage/albums/actions', domains: @domains, album: album %>
+            </td>
+            <td></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <%= paginate @albums %>
+  </div>
+</div>

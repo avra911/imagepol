@@ -1,0 +1,28 @@
+default: &default
+
+  clients:
+    # Defines the default client. (required)
+    default:
+      uri: <%= ENV["MONGOHQ_URL"] %>
+      options:
+        skip_version_check: true
+        safe: true
+  # Configure Mongoid specific options. (optional)
+  options:
+
+development:
+  <<: *default
+
+production:
+  <<: *default
+
+test:
+  clients:
+    default:
+      database: myapp_test
+      hosts:
+        - localhost:27017
+      options:
+        read:
+          mode: :primary
+        max_pool_size: 1

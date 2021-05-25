@@ -1,0 +1,42 @@
+<div class="row page-title">
+  <h4><%= t("domains.albums.title", name: @domain.name) %></h4>
+</div>
+
+<div class="row">
+  <div class="col s12 m3">
+    <%= undraw("like_dislike", color: "#{@color}", size: "100%") %>
+  </div>
+  <div class="col s12 m9">
+
+    <table class="highlight">
+      <thead>
+      <tr>
+        <th width="20">#</th>
+        <th><%= t("albums.columns.name") %></th>
+        <th></th>
+        <th width="20"></th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @albums.each do |album| %>
+        <tr>
+          <td></td>
+          <td>
+            <%= link_to album.name + ' / ' + album.suffix, domain_album_path(
+                domain_name: (album.domain_id.nil? ? album.id : @domain.name),
+                id: album.slug,
+                suffix: album.suffix.parameterize) %>
+          </td>
+          <td class="right" style="width: 120px">
+            <%= render 'actions', domain: @domain, album: album %>
+          </td>
+          <td></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+
+    <%= paginate @albums %>
+  </div>
+</div>

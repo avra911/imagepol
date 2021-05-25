@@ -1,0 +1,75 @@
+<%= form_with(model: album, url: url, local: true) do |form| %>
+  <% if album.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(album.errors.count, "error") %> prohibited this album from being saved:</h2>
+
+      <ul>
+      <% album.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="col s12 m6">
+      <div class="field">
+        <%= form.label :domain_id %>
+        <%= form.collection_select :domain_id, current_user.domains,
+                                   :id, :name,
+                                   include_blank: '',
+                                   :selected => params['domain_id'] || album.domain_id %>
+      </div>
+
+      <div class="input-field">
+        <%= form.label :name %>
+        <%= form.text_field :name, id: :album_name, required: true %>
+      </div>
+
+      <div class="input-field">
+        <%= form.label :suffix %>
+        <%= form.text_field :suffix, id: :album_suffix, required: true %>
+      </div>
+    </div>
+    <div class="col s12 m6">
+      <div class="input-field">
+        <%= form.label :password %>
+        <%= form.password_field :password, id: :album_password, value: album.password %>
+      </div>
+
+      <div class="field">
+
+
+        <div class="switch">
+          <label>
+            Off
+            <%= form.check_box :fb_comments, id: :album_fb_comments %>
+            <span class="lever"></span>
+            On <%= form.label :fb_comments, "Facebook comments" %>
+          </label>
+        </div>
+      </div>
+
+      <div class="input-field" id="album_fb">
+        <%= form.label :fb_id, "Facebook Id" %>
+        <%= form.text_field :fb_id, id: :album_fb_id %>
+      </div>
+
+      <div class="actions" style="margin-top: 20px;">
+        <%= form.submit (album.new_record? ? "Create" : "Save"), class: "btn #{@color}" %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script type="application/javascript">
+    jQuery(function() {
+        var checkbox = $("#album_fb_comments");
+        var hidden = $("#album_fb");
+
+        checkbox.is(':checked') ? hidden.show() : hidden.hide();
+        checkbox.change(function() {
+            checkbox.is(':checked') ? hidden.show() : hidden.hide();
+        });
+    });
+</script>

@@ -1,0 +1,19 @@
+<h1><%= t('albums.edit.title') %></h1>
+
+<ul class="collapsible" data-collapsible="accordion">
+  <li>
+    <div class="collapsible-header"><i class="material-icons">edit</i><%= t('albums.edit.tabs.general.title') %></div>
+    <div class="collapsible-body">
+      <%= render 'form', album: @album, url: manage_album_path(@album) %>
+    </div>
+  </li>
+  <li class="active">
+    <div class="collapsible-header">
+      <i class="material-icons">photo</i><%= t('albums.edit.tabs.gallery.title') %>
+      <span class="badge new" data-badge-caption="<%= t('albums.edit.tabs.gallery.images', count: @album.photos.count) %>"></span>
+    </div>
+    <div class="collapsible-body">
+      <%= render 'dropzone', photo: Photo.new %>
+    </div>
+  </li>
+</ul>

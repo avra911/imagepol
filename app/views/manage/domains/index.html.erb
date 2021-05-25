@@ -1,0 +1,40 @@
+<div class="row page-title">
+  <div class="col s6 m6">
+    <h4><%= t('domains.title') %></h4>
+  </div>
+  <div class="col s6 m6">
+    <%= link_to new_manage_domain_path, class: "btn-floating right btn-large waves-effect waves-light #{@color}" do %>
+      <i class="material-icons">add</i>
+    <% end %>
+  </div>
+</div>
+<div class="row">
+  <div class="col s12 m3">
+    <%= undraw("domain_names", color: "#{@color}", size: "100%") %>
+  </div>
+  <div class="col s12 m9">
+    <table class="highlight">
+      <thead>
+        <tr>
+          <th width="20">#</th>
+          <th><%= t("domains.columns.name") %></th>
+          <th></th>
+          <th width="20"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @domains.each do |domain| %>
+          <tr>
+            <td></td>
+            <td><%= link_to domain.name, domain %></td>
+            <td class="right" style="width: 120px"><%= render '/manage/domains/actions', domain: domain %></td>
+            <td></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <%= paginate @domains %>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+<div class="col s12 m6 l4">
+  <div class="card sticky-action" style="overflow: visible;">
+    <div class="card-image">
+        <%= image_tag(photo.upload(:standard), 
+          # 'data-caption': "A picture", 
+          width: "350",
+          class: "materialboxed") %>
+    </div>
+
+    <div class="card-action">
+      <div class="row" style="margin-bottom: 0;">
+        <div class="right">
+          <%= t('photos.votes', count: photo.rate_count) %>
+          <% unless user_signed_in? %>
+            <%= t('albums.login_to_vote') %>
+          <% end %>
+        </div>
+
+        <div class="left">
+          <% if user_signed_in? %>
+            <%= form_with(model: photo, url: rate_photo_path(photo), local: true) do |form| %>
+              <%= form.hidden_field :vote, value: !(photo.rated_by? current_user) %>
+              <% if photo.rated_by? current_user %>
+                <%= link_to "#", title: t('albums.voted'), :onclick => "$(this).closest('form').submit()" do %>
+                  <i class="material-icons red-text left">favorite</i><%= t('albums.voted') %>
+                <% end %>
+              <% else %>
+                <%= link_to "#", title: t('albums.vote'), :onclick => "$(this).closest('form').submit()" do %>
+                  <i class="material-icons left">favorite_border</i><%= t('albums.vote') %>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
