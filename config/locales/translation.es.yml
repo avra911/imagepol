@@ -81,7 +81,7 @@ es:
       inclusion: no está incluido en la lista
       exclusion: está reservado
       invalid: no es válido
-      confirmation: no coincide
+      confirmation: no coincide %{attribute}
       accepted: debe ser aceptado
       empty: no puede estar vacío
       blank: no puede estar en blanco
@@ -114,9 +114,18 @@ es:
       not_saved:
         one: 'Ocurrió un error al tratar de guardar %{resource}:'
         other: 'Ocurrieron %{count} errores al tratar de guardar %{resource}:'
-    unavailable_session:
-    unacceptable_request:
-    connection_refused:
+    unavailable_session: |
+      La sesión %{id} ya no está disponible en la memoria.
+
+      Si se ejecuta en un servidor de procesos múltiples (como Unicorn o Puma), el proceso
+      este hit de solicitud no almacena %{id} en la memoria. Considere la posibilidad de convertir el número de
+      Procesa / trabaja a uno (1) o usa un servidor diferente en desarrollo.
+    unacceptable_request: 'Una versión compatible Se espera que en la cabecera Aceptar.
+
+'
+    connection_refused: |
+      Ups! No se pudo conectar a la consola Web de middleware.
+      Por favor asegúrese de que un servidor de desarrollo carriles se está ejecutando.
   datetime:
     distance_in_words:
       half_a_minute: medio minuto
@@ -169,9 +178,9 @@ es:
       submit: Guardar %{model}
     page_entries_info:
       entry:
-        zero:
-        one:
-        other:
+        zero: entradas
+        one: entrada
+        other: entradas
       one_page:
         display_entries:
           zero: No se han encontrado %{entry_name}
@@ -183,94 +192,226 @@ es:
   mongoid:
     errors:
       messages:
-        blank_in_locale:
+        blank_in_locale: no puede estar en blanco en %{location}
         message_title:
         summary_title:
         resolution_title:
         ambiguous_relationship:
-          message:
-          summary:
-          resolution:
+          message: Relaciones ambiguas %{candidates} definidas en %{klass}.
+          summary: 'Cuando Mongoid intenta establecer un documento inverso de una
+            relación en la memoria, necesita saber a qué relación pertenece. Al configurar
+            %{name}, Mongoid buscó en la clase %{inverse} una relación coincidente,
+            pero se encontraron múltiplos que podrían potencialmente coincidir: %{candidates}.'
+          resolution: 'En la relación %{name} en %{inverse} debe agregar una opción:
+            inverse_of para especificar la relación exacta en %{klass} que es lo opuesto
+            a %{name}.'
         callbacks:
-          message:
-          summary:
-          resolution:
+          message: Llamar a %{method} en %{klass} resultó en un retorno falso de una
+            devolución de llamada.
+          summary: 'Si una devolución de llamada anterior devuelve falso al usar Document.create
+            !, Document # save !, o Document # update_attributes! este error se generará
+            ya que el documento no se guardó realmente.'
+          resolution: Verifique todo antes de las devoluciones de llamada para asegurarse
+            de que no sean falsas de manera involuntaria.
         calling_document_find_with_nil_is_invalid:
-          message:
-          summary:
-          resolution:
+          message: Llamar Document.find con nil no es válido.
+          summary: Document.find espera que los parámetros sean 1 o más ids, y devolverá
+            un único documento si se proporciona 1 id, de lo contrario una matriz
+            de documentos si se proporcionan múltiples ids.
+          resolution: Lo más probable es que esto se deba a que se pasan los parámetros
+            directamente al hallazgo, y el parámetro no está presente o la clave desde
+            la que se accede es incorrecta.
         document_not_destroyed:
-          message:
-          summary:
-          resolution:
+          message: "%{klass} con id %{id} no se destruyó."
+          summary: 'Al llamar a %{klass} #destroy! y una devolución de llamada detiene
+            la cadena de devolución de llamada de destrucción devolviendo un valor
+            falso, la eliminación no ocurrirá realmente.'
+          resolution: Verifique las devoluciones de llamada before / after destroy
+            para asegurarse de que los valores de retorno sean verdaderos para que
+            la cadena continúe.
         document_not_found:
-          message:
-          summary:
-          resolution:
+          message: Documento (s) no encontrado para la clase %{klass} con id (s) %{missing}.
+          summary: 'Al llamar a %{klass} .find con un id o una matriz de ids, cada
+            parámetro debe coincidir con un documento en la base de datos o se generará
+            este error. La búsqueda fue para los ID: %{searched} (%{total} total)
+            y no se encontraron los siguientes ID: %{missing}.'
+          resolution: Busque un ID que se encuentre en la base de datos o establezca
+            la opción de configuración Mongoid.raise_not_found_error en false, lo
+            que hará que se devuelva un valor nulo en lugar de generar este error
+            cuando se busca una única ID, o solo los documentos coincidentes al buscar
+            múltiplos.
         document_with_attributes_not_found:
-          message:
-          summary:
-          resolution:
+          message: Documento no encontrado para la clase %{klass} con atributos %{attributes}.
+          summary: Al llamar a %{klass} .find_by con un hash de atributos, todos los
+            atributos proporcionados deben coincidir con un documento en la base de
+            datos o se generará este error.
+          resolution: Busque los atributos que están en la base de datos o establezca
+            la opción de configuración Mongoid.raise_not_found_error en false, lo
+            que hará que se devuelva nil en lugar de generar este error.
         eager_load:
-          message:
-          summary:
-          resolution:
+          message: 'Carga ansiosa: %{name} no es compatible ya que es una relación
+            de propiedad_para polimórfica.'
+          summary: Mongoid actualmente no puede determinar las clases que necesita
+            para cargar ansiosamente cuando la relación es polimórfica. Los padres
+            residen en diferentes colecciones por lo que una simple búsqueda de identificación
+            no es suficiente.
+          resolution: No intente realizar esta acción y tenga paciencia, tal vez esto
+            sea compatible en el futuro.
         invalid_collection:
-          message:
-          summary:
-          resolution:
+          message: No se permite el acceso a la colección de %{klass}.
+          summary: Se llamó a %{klass} .collection y %{klass} es un documento incrustado;
+            reside dentro de la colección del documento raíz de la jerarquía.
+          resolution: 'Para acceder a la colección en la que se encuentra el documento
+            incrustado, use %{klass} #_ root.collection, o no intente conservar un
+            documento incrustado sin un conjunto principal.'
         in_memory_collation_not_supported:
-          message:
-          summary:
-          resolution:
+          message: No se puede aplicar una opción de intercalación cuando se consultan
+            documentos en la memoria.
+          summary: La consulta que se ejecuta contra documentos en la memoria tiene
+            una opción de intercalación establecida. Una opción de intercalación solo
+            se admite si la consulta se ejecuta en un servidor MongoDB con la versión>
+            = 3.4.
+          resolution: Elimine la opción de intercalación de la consulta.
         invalid_config_option:
-          message:
-          summary:
-          resolution:
+          message: 'Opción de configuración no válida: %{name}.'
+          summary: 'Se proporcionó una opción de configuración no válida en su mongoid.yml,
+            o existe un error tipográfico. Las opciones de configuración válidas son:
+            %{options}.'
+          resolution: |-
+            Elimine la opción no válida o corrija el error tipográfico. Si esperaba que la opción estuviera allí, consulte la siguiente página con respecto a la configuración de Mongoid:
+
+             http://mongoid.org/en/mongoid/docs/installation.html
         invalid_dependent_strategy:
-          message:
-          summary:
-          resolution:
+          message: 'Estrategia dependiente no válida: %{invalid_strategy}.'
+          summary: 'Se definió una estrategia dependiente no válida para la asociación:
+            %{association}. Las estrategias válidas son: %{valid_strategies}.'
+          resolution: Cambie la estrategia dependiente a uno de los tipos válidos.
         invalid_field:
-          message:
-          summary:
-          resolution:
+          message: No se permite definir un campo llamado '%{name}'.
+          summary: |-
+            La definición de este campo anularía el método '%{name}', lo que causaría problemas con las expectativas sobre el método original y causaría problemas extremadamente difíciles de depurar. El método original se definió en:
+             Objeto: %{origin}
+             Archivo: %{file}
+             Línea: %{line}
+          resolution: Use Mongoid.destructive_fields para ver qué nombres no están
+            permitidos, y no use estos nombres. Estos incluyen nombres que también
+            entran en conflicto con los métodos básicos de Ruby en Object, Module,
+            Enumerable o gemas incluidas que inyectan métodos en estos o Mongoid internal.
         invalid_field_option:
-          message:
-          summary:
-          resolution:
+          message: 'Opción no válida: %{option} proporcionada para el campo: %{name}.'
+          summary: Mongoid requiere que solo proporcione opciones válidas en cada
+            definición de campo para evitar comportamientos inesperados más adelante.
+          resolution: |+
+            Al definir el campo: %{name} en '%{klass}', proporcione opciones válidas para el campo. Actualmente son: %{valid}. Si deseaba definir una opción de campo personalizado, hágalo primero así:
+
+             Mongoid :: Fields.option: %{option} hacer | modelo, campo, valor |
+             # Tu lógica aquí ...
+             final
+             clase %{klass}
+             incluir Mongoid :: Documento
+             campo: %{name}, %{option}: verdadero
+             final
+
         invalid_includes:
-          message:
-          summary:
-          resolution:
+          message: 'Directiva de inclusión no válida: %{klass} .include (%{args})'
+          summary: La carga ansiosa en Mongoid solo admite proporcionar argumentos
+            a %{klass}. Incluye los nombres de las relaciones en %{klass}.
+          resolution: 'Asegúrese de que cada parámetro pasado a %{klass} .incluya
+            sea un nombre válido de una relación en el modelo %{klass}. Estos son:
+            %{relations}.'
         invalid_index:
-          message:
-          summary:
-          resolution:
+          message: 'Especificación de índice no válida en %{klass}: %{spec}, %{options}'
+          summary: Los índices en Mongoid se definen como un hash de nombre de campo
+            y dirección / pares 2d, con un hash para cualquier opción adicional.
+          resolution: |+
+            Asegúrese de que el índice se ajuste a la sintaxis correcta y tenga las opciones correctas.
+
+             Las opciones válidas son:
+             fondo: verdadero | falso
+             base de datos: 'nombre_base_datos'
+             drop_dups: verdadero | falso
+             nombre: 'index_name'
+             escaso: verdadero | falso
+             único: verdadero | falso
+             min: 1
+             máx: 1
+             bits: 26
+             clave: 26
+             bucket_size: 1
+             esfera_versión: 1
+             versión_texto: 1
+             versión 1
+             pesos: {contenido: 1, título: 2}
+             expire_after_seconds: número_de_segundos
+             expresión_filtro_parcial
+             motor_almacenamiento
+             language_override
+             idioma predeterminado
+             colación
+             Los tipos válidos son: 1, -1, '2d', '2dsphere', 'geoHaystack', 'text', 'hashed'
+
+             Ejemplo:
+             banda de clase
+             incluir Mongoid :: Documento
+             índice ({nombre: 1, etiqueta: -1}, {disperso: verdadero})
+             índice ({ubicación: '2d'}, {fondo: verdadero})
+             final
+
         invalid_options:
-          message:
-          summary:
-          resolution:
+          message: 'Opción no válida: %{invalid} proporcionada para la relación: %{name}.'
+          summary: Mongoid comprueba las opciones que se pasan a las macros de relación
+            para garantizar que no se produzcan efectos secundarios negativos al dejar
+            pasar algo.
+          resolution: 'Las opciones válidas son: %{valid}, asegúrese de que estas
+            sean las que está utilizando.'
         invalid_path:
-          message:
-          summary:
-          resolution:
+          message: Tener una ruta raíz asignada para %{klass} no es válido.
+          summary: Mongoid tiene dos objetos de ruta diferentes para determinar la
+            ubicación de un documento en la base de datos, Root e Embedded. Este error
+            se produce cuando un documento incrustado obtiene de alguna manera una
+            ruta de acceso de raíz asignada.
+          resolution: Lo más probable es que su modelo incrustado, %{klass} también
+            se haga referencia a través de has_many desde un documento raíz en otra
+            colección. Verifique dos veces las definiciones de relación y corrija
+            cualquier instancia en la que los documentos incrustados tengan referencias
+            incorrectas de otras colecciones.
         invalid_persistence_option:
-          message:
-          summary:
-          resolution:
+          message: 'Opción de persistencia no válida: %{invalid}.'
+          summary: Las opciones utilizadas para cambiar el contexto de persistencia
+            deben ser una de las opciones válidas para un cliente mongo o un nombre
+            de colección.
+          resolution: 'Las opciones válidas son: %{valid}, asegúrese de que estas
+            sean las que está utilizando.'
         invalid_relation:
-          message:
-          summary:
-          resolution:
+          message: No se permite definir una relación denominada '%{name}'.
+          summary: |-
+            Definir esta relación anularía el método '%{name}', lo que causaría problemas con las expectativas sobre el método original y causaría problemas extremadamente difíciles de depurar. El método original se definió en:
+             Objeto: %{origin}
+             Archivo: %{file}
+             Línea: %{line}
+          resolution: Use Mongoid.destructive_fields para ver qué nombres no están
+            permitidos, y no use estos nombres. Estos incluyen nombres que también
+            entran en conflicto con los métodos básicos de Ruby en Object, Module,
+            Enumerable o gemas incluidas que inyectan métodos en estos o Mongoid internal.
         invalid_relation_option:
-          message:
-          summary:
-          resolution:
+          message: 'Opción de relación no válida: %{option} para la relación ''%{name}''
+            en la clase %{klass}.'
+          summary: Se proporcionó una opción no válida para una relación.
+          resolution: 'Las opciones válidas son: %{valid_options}, asegúrese de usar
+            solo esas.'
         invalid_scope:
-          message:
-          summary:
-          resolution:
+          message: No se permite definir un ámbito de valor %{value} en %{klass}.
+          summary: Los ámbitos en Mongoid deben ser procesos que envuelvan objetos
+            de criterios.
+          resolution: |+
+            Cambie el alcance para que sea un critera envuelto en proceso.
+
+             Ejemplo:
+             banda de clase
+             incluir Mongoid :: Documento
+             alcance: inactivo, -> {donde (activo: falso)}
+             final
+
         invalid_session_use:
           message:
           summary:
@@ -393,18 +534,21 @@ es:
           summary:
           resolution:
         delete_restriction:
-          message:
-          summary:
-          resolution:
+          message: No se puede eliminar %{document} debido al dependiente '%{relation}'.
+          summary: 'Al definir ''%{relation}'' con un: dependiente =>: restringir,
+            Mongoid generará un error al intentar eliminar el %{document} cuando el
+            niño ''%{relation}'' todavía tiene documentos.'
+          resolution: No intente eliminar el padre %{document} cuando tenga hijos
+            ni cambie la opción dependiente en la relación.
   flash:
     actions:
       create:
-        notice:
+        notice: "%{resource_name} fue creado exitosamente."
       update:
-        notice:
+        notice: "%{resource_name} se actualizó con éxito."
       destroy:
-        notice:
-        alert:
+        notice: "%{resource_name} fue destruido con éxito."
+        alert: "%{resource_name} no pudo ser destruido."
   activerecord:
     attributes:
       user:
@@ -642,23 +786,23 @@ es:
       truncate: "&hellip;"
   admin:
     js:
-      is_present:
-      is_blank:
-      date:
-      between_and_:
-      today:
-      yesterday:
-      this_week:
-      last_week:
-      number:
-      contains:
-      is_exactly:
-      starts_with:
-      ends_with:
-      too_many_objects:
-      no_objects:
-    loading:
-    toggle_navigation:
+      is_present: está presente
+      is_blank: está en blanco
+      date: Fecha ...
+      between_and_: En medio y ...
+      today: Hoy
+      yesterday: Ayer
+      this_week: Esta semana
+      last_week: La semana pasada
+      number: Número ...
+      contains: contiene
+      is_exactly: Es exactamente
+      starts_with: comienza con
+      ends_with: termina con
+      too_many_objects: Demasiados objetos, usa el cuadro de búsqueda arriba
+      no_objects: No hay objetos encontrados
+    loading: Cargando...
+    toggle_navigation: Navegación de palanca
     home:
       name: Inicio
     pagination:
@@ -668,7 +812,7 @@ es:
     misc:
       search: Buscar
       filter: Filtrar
-      reset_filters:
+      reset_filters: Restablecer filtros
       refresh: Actualizar
       show_all: Mostrar todo
       add_filter: Añadir filtro
@@ -680,12 +824,12 @@ es:
       up: Arriba
       down: Abajo
       navigation: Navegación
-      root_navigation:
+      root_navigation: Acciones
       navigation_static_label:
       log_out: Desconectar
-      time_ago:
+      time_ago: "%{time} hace"
       ago: atrás
-      more:
+      more: Más %{count} más %{models_name}
     flash:
       successful: "%{name} %{action} con éxito"
       error: "%{name} no se ha %{action}"
@@ -694,7 +838,7 @@ es:
       object_not_found: "%{model} con id '%{id}' no se pudo encontrar"
     table_headers:
       model_name: Nombre del modelo
-      last_created:
+      last_created: última creado
       records: Registros
       username: Usuario
       changes: Cambios
@@ -776,12 +920,12 @@ es:
     export:
       confirmation: Exportar a %{name}
       select: Seleccione los campos a exportar
-      select_all_fields:
+      select_all_fields: Seleccionar todos los campos
       fields_from: Campos de %{name}
       fields_from_associated: Campos del %{name} asociado
       display: 'Mostrar %{name}: %{type}'
       options_for: Opciones para %{name}
-      empty_value_for_associated_objects: "<vacío>"
+      empty_value_for_associated_objects: "<empty>"
       click_to_reverse_selection: Haga click para invertir la selección
       csv:
         header_for_root_methods: "%{name}"
@@ -801,48 +945,51 @@ es:
       code: es_ES
       name: Español
   message:
-    welcome:
-    welcome_guest:
-    logged_in_as:
-    welcome_slide:
+    welcome: "¡Bienvenido de nuevo, <strong>%{user_name}</strong> !"
+    welcome_guest: "¡Compartir imágenes de forma fácil!"
+    logged_in_as: Accedido como <strong>%{name}</strong>
+    welcome_slide: Un moderno sistema de intercambio de fotos público / privado receptivo
+      para individuos o empresas
   actions:
-    show:
-    edit:
-    delete:
-    are_you_sure:
+    show: Ver
+    edit: Editar
+    delete: Eliminar
+    are_you_sure: "¿Está usted seguro?"
   domains:
-    title:
-    new:
-    add:
-    my:
+    title: Dominios
+    new: Dominio nuevo
+    add: Agregar un nuevo dominio
+    my: Mis dominios
     albums:
-      title:
+      title: Álbumes de %{name}
     columns:
-      name:
+      name: Nombre
     messages:
-      intro:
-      dns_explain:
+      intro: Puede agregar un nuevo dominio para usarlo como prefijo único para los
+        álbumes
+      dns_explain: Incluya un registro TXT en su DNS con el nombre "%{name}" y el
+        valor "%{value}".<br /> El DNS podría tardar un poco más en propagarse.
   albums:
-    title:
+    title: Los álbumes
     edit:
-      title:
+      title: Edición de álbum
       tabs:
         general:
-          title:
+          title: Información general
         gallery:
-          title:
+          title: Galería
           images:
-            one:
-            other:
-    new:
-    my:
-    login_to_vote:
-    vote:
-    voted:
+            one: "%{count} imagen"
+            other: "%{count} imágenes"
+    new: Nuevo album
+    my: Mis Álbumes
+    login_to_vote: "(iniciar sesión para votar)"
+    vote: Votar
+    voted: Votado
     columns:
-      name:
-      domain:
-      suffix:
+      name: Nombre
+      domain: Dominio
+      suffix: Sufijo
   photos:
     dropzone:
       upload:

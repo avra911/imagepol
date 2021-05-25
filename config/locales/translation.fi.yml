@@ -432,8 +432,8 @@ fi:
         updated_at: Päivitetty
     models:
       user:
-        one:
-        other:
+        one: Käyttäjä
+        other: käyttäjät
   devise:
     confirmations:
       confirmed: Sähköpostiosoitteesi on nyt vahvistettu.
@@ -699,57 +699,57 @@ fi:
       message:
     actions:
       dashboard:
-        title:
-        menu:
-        breadcrumb:
+        title: Sivuston hallinta
+        menu: kojelauta
+        breadcrumb: kojelauta
       index:
-        title:
-        menu:
-        breadcrumb:
+        title: Luettelo %{model_label_plural}
+        menu: Lista
+        breadcrumb: "%{model_label_plural}"
       show:
-        title:
-        menu:
-        breadcrumb:
+        title: Tiedot kohteesta %{model_label} '%{object_label}'
+        menu: Show
+        breadcrumb: "%{object_label}"
       show_in_app:
-        menu:
+        menu: Näytä sovelluksessa
       new:
-        title:
-        menu:
-        breadcrumb:
-        link:
-        done:
+        title: uusi %{model_label}
+        menu: Lisää uusi
+        breadcrumb: Uusi
+        link: Lisää uusi %{model_label}
+        done: luotu
       edit:
-        title:
-        menu:
-        breadcrumb:
-        link:
-        done:
+        title: Muokkaa %{model_label} '%{object_label}'
+        menu: muokata
+        breadcrumb: muokata
+        link: Muokkaa tätä %{model_label}
+        done: päivitetty
       delete:
-        title:
-        menu:
-        breadcrumb:
-        link:
-        done:
+        title: Poista %{model_label} '%{object_label}'
+        menu: poistaa
+        breadcrumb: poistaa
+        link: Poista %{object_label}
+        done: Poistetaan
       bulk_delete:
-        title:
-        menu:
-        breadcrumb:
-        bulk_link:
+        title: Poista %{model_label_plural}
+        menu: Useita poistoja
+        breadcrumb: Useita poistoja
+        bulk_link: Poista valittu %{model_label_plural}
       export:
-        title:
-        menu:
-        breadcrumb:
-        link:
-        bulk_link:
-        done:
+        title: Vie %{model_label_plural}
+        menu: Viedä
+        breadcrumb: Viedä
+        link: Vie löydetty %{model_label_plural}
+        bulk_link: Vie valittu %{model_label_plural}
+        done: viedään
       history_index:
-        title:
-        menu:
-        breadcrumb:
+        title: "%{model_label_plural}: n historia"
+        menu: Historia
+        breadcrumb: Historia
       history_show:
-        title:
-        menu:
-        breadcrumb:
+        title: "%{model_label} '%{object_label}' -historia"
+        menu: Historia
+        breadcrumb: Historia
     form:
       cancel:
       basic_info:
@@ -798,10 +798,10 @@ fi:
     logged_in_as:
     welcome_slide:
   actions:
-    show:
-    edit:
-    delete:
-    are_you_sure:
+    show: Show
+    edit: muokata
+    delete: poistaa
+    are_you_sure: Oletko varma?
   domains:
     title:
     new:

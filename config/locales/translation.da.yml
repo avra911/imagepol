@@ -698,57 +698,57 @@ da:
       message:
     actions:
       dashboard:
-        title:
+        title: Webstedsadministration
         menu: instrumentbræt
         breadcrumb: instrumentbræt
       index:
-        title:
-        menu:
-        breadcrumb:
+        title: Liste over %{model_label_plural}
+        menu: liste
+        breadcrumb: "%{model_label_plural}"
       show:
-        title:
-        menu:
-        breadcrumb:
+        title: Detaljer for %{model_label} '%{object_label}'
+        menu: At vise
+        breadcrumb: "%{object_label}"
       show_in_app:
         menu:
       new:
-        title:
-        menu:
-        breadcrumb:
-        link:
-        done:
+        title: Ny %{model_label}
+        menu: Tilføj ny
+        breadcrumb: Ny
+        link: Tilføj en ny %{model_label}
+        done: Oprettet
       edit:
-        title:
-        menu:
-        breadcrumb:
-        link:
-        done:
+        title: Rediger %{model_label} '%{object_label}'
+        menu: Redigere
+        breadcrumb: Redigere
+        link: Rediger dette %{model_label}
+        done: opdateret
       delete:
-        title:
-        menu:
-        breadcrumb:
-        link:
-        done:
+        title: Slet %{model_label} '%{object_label}'
+        menu: Slette
+        breadcrumb: Slette
+        link: Slet '%{object_label}'
+        done: slettet
       bulk_delete:
         title: Slet %{model_label_plural}
         menu: Flere sletninger
         breadcrumb: Flere sletninger
         bulk_link: Slet valgt %{model_label_plural}
       export:
-        title:
-        menu:
-        breadcrumb:
-        link:
-        bulk_link:
-        done:
+        title: Eksport %{model_label_plural}
+        menu: Eksport
+        breadcrumb: Eksport
+        link: Eksport fundet %{model_label_plural}
+        bulk_link: Eksport valgt %{model_label_plural}
+        done: eksporterede
       history_index:
-        title:
-        menu:
-        breadcrumb:
+        title: Historie for %{model_label_plural}
+        menu: Historie
+        breadcrumb: Historie
       history_show:
-        title:
-        menu:
-        breadcrumb:
+        title: Historie for %{model_label} '%{object_label}'
+        menu: Historie
+        breadcrumb: Historie
     form:
       cancel:
       basic_info:
