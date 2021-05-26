@@ -758,7 +758,8 @@ mt:
         header_for_root_methods:
         header_for_association_methods:
         encoding_to:
-        encoding_to_help:
+        encoding_to_help: 'Agħżel il-kodifikazzjoni tal-ħruġ. Ħalli vojt biex tħalli
+          l-kodifikazzjoni tal-input kurrenti mhux mittiefsa: (%{name})'
         skip_header:
         skip_header_help: Ma toħroġx header (l-ebda deskrizzjoni ta 'oqsma)
         default_col_sep:
