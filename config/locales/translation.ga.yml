@@ -785,7 +785,7 @@ ga:
   i18n:
     language:
       code:
-      name:
+      name: Gaeilge
   message:
     welcome: Fáilte ar ais, <strong>%{user_name}</strong> !
     welcome_guest: Íomhánna a Chomhroinnt Déanta Éasca!
